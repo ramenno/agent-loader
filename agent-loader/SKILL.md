@@ -1,6 +1,6 @@
 ---
 name: agent-loader
-description: Code, analyse, refactor and deploys python agents using Google's Agent Development Kit (ADK), an agentic framework and A2A protocol.
+description: Code, analyse, refactor and deploys python agents using Google's Agent Development Kit (ADK), an agentic framework and A2A protocol and manage those agents in Gemini Enterprise (formerly Agentspace, informally GemEnt).
 ---
 
 # ADK Python
@@ -24,7 +24,7 @@ ADK was designed to make agent development feel more like software development, 
 
 #### Creating an agent
 - Make sure you are in the root direcotry of the wokspace
-- Run `gcloud config list` to get a the currently active project
+- Run `gcloud config list` to get the id of the currently active project, PROJECT_ID
 - Do a google search for the latest Gemini Pro model in Vertex that is generally available, go to the page and find the model id, like `gemini-2.5-pro`
 - Run this command to create the agent `adk create --model MODEL_ID --project PROJECT_ID --region us-central1 my_agent`
 
@@ -79,3 +79,22 @@ A2A provides the definitive common language for agent interoperability in a worl
 - If you find a .venv, activate it and use it for all python code.
 - If you do not find a .venv, create one
 - Install or update the python package `a2a-sdk` using `pip install --upgrade a2a-sdk`
+
+# Gemini Enterprise
+
+## When to use this skill
+- Use this when the user wants to see, manage or update agent registrations in Gemini Enterprise (previously known as Agentspace).
+
+## Typical operations
+- Gemini Enterprise, at this time, does not have a CLI or client library, so you need to use REST APIs to get things done with Gemini Enterprise
+- Before each and every invocation of the REST API, always generate an ACCESS_TOKEN first by running `gcloud auth print-access-token`
+- Below are a list of typical actions you can perform with Gemini enterprise
+
+### Listing available Gemini Enterprise instances available
+- Run the following curl command
+    curl -X GET \
+        -H "Authorization: Bearer ACCESS_TOKEN" \
+        -H "Content-Type: application/json" \
+        -H "X-Goog-User-Project: PROJECT_ID" \
+        "https://global-discoveryengine.googleapis.com/v1alpha/projects/PROJECT_ID/locations/global/collections/default_collection/engines/"
+- Then filter to only those results that have "appType": "APP_TYPE_INTRANET" and print their name, displayName and createTime
