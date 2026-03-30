@@ -1,20 +1,17 @@
 ---
 name: agent-loader
-description: Code, analyse, refactor and deploys python agents using Google's Agent Development Kit (ADK), an agentic framework
+description: Code, analyse, refactor and deploys python agents using Google's Agent Development Kit (ADK), an agentic framework and A2A protocol.
 ---
 
 # ADK Python
-
 Agent Development Kit (ADK) is a flexible and modular framework for developing and deploying AI agents.
 While optimized for Gemini and the Google ecosystem, ADK is model-agnostic, deployment-agnostic, and is built for compatibility with other frameworks. 
 ADK was designed to make agent development feel more like software development, to make it easier for developers to create, deploy, and orchestrate agentic architectures that range from simple tasks to complex workflows.
 
 ## When to use this skill
-
 - Use this when the user wants to create, analyse or refactor an agentic app using ADK
 
 ## How to use ADK
-
 - Check if you have a recent downloaded copy of https://github.com/google/adk-docs from the last 24 hours
 - If not, always download the repo https://github.com/google/adk-docs into a temporary directory and use it for reference
 
@@ -45,6 +42,17 @@ ADK was designed to make agent development feel more like software development, 
 - Type in the inputs to the `[user]` prompt and wait for the agent responses.
 - Type `exit` to exit
 
+### Running/testing the agent remotely when you can launch a browser UI
+- From the workspace root directory, run the `adk web --reload_agents --verbose ` command
+- Open the browser and navigate to http://127.0.0.1:8000
+- In the top left dropdown, select the agent from the dropdown
+- In the right handside panel, type the message to the agent in the text input in the bottom
+
+### Running/testing the agent remotely when you do not have a browser UI and are in a terminal
+- From the workspace root directory, run `adk run AGENT_DIRECTORY --log_level debug `
+- Type in the inputs to the `[user]` prompt and wait for the agent responses.
+- Type `exit` to exit
+
 ### Deploying the agent to Agent Engine - the default if the user just says deploy
 - Edit the .env file for the agent being deployed to add these two lines `OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT=true` and `GOOGLE_CLOUD_AGENT_ENGINE_ENABLE_TELEMETRY=true`
 - Make sure you are in the workspace root directory
@@ -56,3 +64,18 @@ ADK was designed to make agent development feel more like software development, 
 - If the agent name has underscores, replace with hyphens as Cloud Run service_name does not allow underscores in name
 - Run the command `adk deploy cloud_run --project PROJECT_NAME --region us-central1 --service_name AGENT-NAME-WITH-HYPHEN-NO-UNDERSCORE --trace_to_cloud --otel_to_cloud --with_ui --log_level debug --region us-central1 AGENT_FOLDER`
 
+# A2A Protocol Python
+A2A provides the definitive common language for agent interoperability in a world where agents are built using diverse frameworks and by different vendors.
+
+## When to use this skill
+- Use this when the user wants to create, analyse or refactor agents that communicate with each other using A2A protocol
+
+## How to use A2A
+- Check if you have a recent downloaded copy of https://github.com/a2aproject/A2A from the last 24 hours
+- If not, always download the repo https://github.com/a2aproject/A2A into a temporary directory and use it for reference
+
+### Installation and set up
+- The root directory of the workshpace should have a python virtual environment created using `python -m venv .venv`
+- If you find a .venv, activate it and use it for all python code.
+- If you do not find a .venv, create one
+- Install or update the python package `a2a-sdk` using `pip install --upgrade a2a-sdk`
