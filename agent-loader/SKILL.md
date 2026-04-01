@@ -45,7 +45,7 @@ Gemini Enterprise is Google's is a portal where employees can access agents runn
 - Install or update the python package `google-adk` using `pip install --upgrade google-adk`
 - In the root directory, every standalone agent will be in its own directory
 
-#### Creating an agent
+### Creating an agent
 - Make sure you are in the root direcotry of the wokspace
 - Run this command to create the agent `adk create --model MODEL_ID --project PROJECT_ID --region us-central1 my_agent`
 
@@ -137,12 +137,12 @@ A2A provides the definitive common language for agent interoperability in a worl
         -H "Content-Type: application/json" \
         -H "X-Goog-User-Project: PROJECT_ID" \
         "https://global-discoveryengine.googleapis.com/v1alpha/projects/PROJECT_ID/locations/global/collections/default_collection/engines/"
-- Then filter to only those results that have "appType": "APP_TYPE_INTRANET" and print their name, displayName and createTime
+- Then filter to only those results that have "appType": "APP_TYPE_INTRANET" and print all of the details as a detailed report
 - If there are none, inform the user that no Gemini Enterprise instance was found and ask them to create one
 - If there are multiple Gemini Enterprise instances, ask the user to select one.
 - Then save the name as GEM_ENT_NAME in the config file
 
-### Listing all agents currently registered with a Gemini Enterprise instnance
+### Listing all agents currently registered with a Gemini Enterprise instance
 - Check if there is a value for GEM_ENT_NAME. If not, follow "Listing available Gemini Enterprise instances available" above.
 - After getting a value for GEM_ENT_NAME, run the following curl command:
     curl -X GET \
@@ -150,3 +150,24 @@ A2A provides the definitive common language for agent interoperability in a worl
         -H "Content-Type: application/json" \
         -H "X-Goog-User-Project: PROJECT_ID" \
         "https://global-discoveryengine.googleapis.com/v1alpha/GEM_ENT_NAME/assistants/default_assistant/agents"
+- Then print all the following columns - name, displayName, description, reasoningEngine, authorizationConfig, sharingConfig, createTime and updateTime as a detailed report
+
+### Viewing the details of an agent currently registered with a Gemini Enterprise instance
+- Check if there is a value for GEM_ENT_NAME. If not, follow "Listing available Gemini Enterprise instances available" above.
+- Check if there is a value for GEM_ENT_REGISTERED_AGENT. If not, follow "Listing all agents currently registered with a Gemini Enterprise instance" above and ask the user to select one.
+- Then run the curl command:
+    curl -X GET \
+        -H "Authorization: Bearer ACCESS_TOKEN" \
+        -H "Content-Type: application/json" \
+        -H "X-Goog-User-Project: PROJECT_ID" \
+        "https://global-discoveryengine.googleapis.com/v1alpha/projects/GEM_ENT_NAME/assistants/default_assistant/agents/GEM_ENT_REGISTERED_AGENT"
+
+### Listing all authorisations in a Gemini Enterprise instance
+- Check if there is a value for GEM_ENT_NAME. If not, follow "Listing available Gemini Enterprise instances available" above.
+- Then run the curl command:
+    curl -X GET \
+        -H "Authorization: Bearer ACCESS_TOKEN" \
+        -H "Content-Type: application/json" \
+        -H "X-Goog-User-Project: PROJECT_ID" \
+        "https://global-discoveryengine.googleapis.com/v1alpha/projects/PROJECT_ID/locations/REGION/authorizations"
+- Then print those details as a detailed report
